@@ -1,0 +1,1580 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+\RequirePackage[T1]{fontenc}
+
+% LaTeX will typeset using Computer Modern Roman, which a lot of
+% non-mathematicians and non-engineers won't like. Also, a few PDF
+% viewers may not render CMR very well. Instead, Times New Roman can
+% be used. That's what this package does.
+\usepackage{times}
+
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+% (NOTE: This requires the times package above)
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+% This package helps LaTeX auto-hyphenate hyphenated words if you use
+% special hyphens. For example, bio\-/mimicry will properly hyphenate
+% ``mimicry'' if necessary.
+\usepackage[shortcuts]{extdash}
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+% Provides special list environments and macros to create new ones
+\usepackage[shortlabels]{enumitem}
+
+% Simpler bibsections for CV sections
+% (thanks to natbib for inspiration)
+%
+% * For lists of references with hanging indents and no numbers:
+%
+%   \begin{bibsection}
+%       \item ...
+%   \end{bibsection}
+%
+% * For numbered lists of references (with hanging indents):
+%
+%   \begin{bibenum}
+%       \item ...
+%   \end{bibenum}
+%
+%   Note that bibenum numbers continuously throughout. To reset the
+%   counter, use
+%
+%   \restartlist{bibenum}
+%
+%   at the place where you want the numbering to reset.
+
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newlist{bibsection}{itemize}{3}
+\setlist[bibsection]{label=,leftmargin=\bibhang,%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\newlist{bibenum}{enumerate}{3}
+\setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\let\oldendbibenum\endbibenum
+\def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+\let\oldendbibsection\endbibsection
+\def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+\makeatother
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% HEADING AT TOP OF CURRICULUM VITAE
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[{\includegraphics[height=1.5in]{my_picture}}]{Your Name}
+%
+% the picture will be flush right across from the name. For this example
+% to work, make sure the extra set of curly braces is included. Also
+% makes ure that \usepackage{graphicx} is somewhere in the preamble.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+%%% SECTION HEADINGS
+
+% The section headings. Flush left in small caps down pseudo-margin.
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\hyphenpenalty=10000\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+%%% LISTS
+
+% This macro alters a list by removing some of the space that follows the list
+% (is used by lists below)
+\newcommand*\fixendlist[1]{%
+    \expandafter\let\csname preFixEndListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixEndListend#1\endcsname\vspace{-0.6\baselineskip}}}
+
+% These macros help ensure that items in outer-type lists do not get
+% separated from the next line by a page break
+% (they are used by lists below)
+\let\originalItem\item
+\newcommand*\fixouterlist[1]{%
+    \expandafter\let\csname preFixOuterList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\def\item{\pagebreak[2]\oldItem}\csname preFixOuterList#1\endcsname}
+    \expandafter\let\csname preFixOuterListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\let\item\oldItem\csname preFixOuterListend#1\endcsname}}
+\newcommand*\fixinnerlist[1]{%
+    \expandafter\let\csname preFixInnerList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\let\item\originalItem\csname preFixInnerList#1\endcsname}
+    \expandafter\let\csname preFixInnerListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixInnerListend#1\endcsname\let\item\oldItem}}
+
+% An itemize-style list with lots of space between items
+%
+% Usage:
+%   \begin{outerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{outerlist}
+\newlist{outerlist}{itemize}{3}
+    \setlist[outerlist]{label=\enskip\textbullet,leftmargin=*}
+    \fixendlist{outerlist}
+    \fixouterlist{outerlist}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{lonelist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{lonelist}
+\newlist{lonelist}{itemize}{3}
+    \setlist[lonelist]{label=\enskip\textbullet,leftmargin=*,partopsep=0pt,topsep=0pt}
+    \fixendlist{lonelist}
+    \fixouterlist{lonelist}
+
+% An itemize-style list with little space between items
+%
+% Usage:
+%   \begin{innerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{innerlist}
+\newlist{innerlist}{itemize}{3}
+    \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixinnerlist{innerlist}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{loneinnerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{loneinnerlist}
+\newlist{loneinnerlist}{itemize}{3}
+    \setlist[loneinnerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixendlist{loneinnerlist}
+    \fixinnerlist{loneinnerlist}
+
+%%% EXTRA SPACE
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+%%% FORMATTING MACROS
+
+% Provides a linked \doi{#1} that links doi:#1 to http://dx.doi.org/#1
+\usepackage{doi}
+% To change the text before the DOI, adjust this command
+%\renewcommand\doitext{doi:}
+
+% Provides a linked \url{#1} that doesn't require escape characters
+\usepackage{url}
+
+% You can adjust the style \url{} uses here:
+% (options are: same, rm, sf, tt; defaults to tt)
+\urlstyle{same}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+% (uncomment to typeset the e\-/mail address in typewriter font;
+%  otherwise, will be typeset in the \urlstyle above)
+%\DeclareUrlCommand\emaillink{\urlstyle{tt}}
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+
+% Custom hyphenation rules for words that LaTeX has trouble with
+\hyphenation{bio-mim-ic-ry bio-in-spi-ra-tion re-us-a-ble pro-vid-er Media-Wiki}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Dr.~Bryan Dixon}
+
+\section{Contact Information}
+
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table. Table is one row made up of three parboxes. The left
+%       parbox has address info, the middle parbox has a vertical bar,
+%       and the right parbox has phone and electronic contact
+%       information.
+%
+% MACROS: \rcollength is the width of the right column of the table
+%             (adjust it to your liking; default is 1.85in).
+%         \spacewidth is width of area between left and right boxes.
+%
+\newlength{\rcollength}\setlength{\rcollength}{1.85in}%
+\newlength{\spacewidth}\setlength{\spacewidth}{20pt}
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
+
+% Address box
+\parbox{\textwidth-\rcollength-\spacewidth}{%
+Associate Professor\\
+\href{http:/www.csuchico.edu/csci}{Computer Science Department}\\
+\href{http://www.csuchico.edu/}{California State University Chico}}
+
+&
+% Uncomment to add a vertical bar in middle of contact information
+%{\vrule width 0.5pt}
+\parbox[m][5\baselineskip]{\spacewidth}{} &
+
+% Non-snail-mail contact information
+\parbox{\rcollength}{%
+\textit{phone:} +1-530-898-4864 \\
+\textit{e-mail:} \email{bcdixon@csuchico.edu}\\
+\textit{website:} \href{http://www.bryancdixon.com/}{www.bryancdixon.com}}
+
+\end{tabular}
+
+%%
+%% In modern CV's, it seems like ``Objective'' is frowned upon. Instead,
+%% incorporate it into a well-constructed cover letter. The ``More
+%% information'' can go at the end of the CV, but it should not distract
+%% from the section giving references available to contact.
+%%
+%
+% \section{Objective}
+%
+% Placement in an academic position (i.e., faculty, postdoctoral, or
+% research scientist) that allows for advanced research in distributed
+% complex adaptive systems (i.e., modeling, analysis, design, and
+% verification) with a particular focus on the control of engineered
+% agents (e.g., for communications, control, software, electronics, and
+% sustainability) and the analysis of biological phenomena (e.g.,
+% self-organization, ecological rationality)
+% \begin{innerlist}
+% \item More information and auxiliary documents can be found at\\\url{http://www.tedpavlic.com/facjobsearch/}
+% \end{innerlist}
+
+\section{Research Interests}
+
+\textbf{Detecting power hungry malicious code on smartphones:} mobile security, security, mobile energy efficiency, computer science education, mobile development, web development, devops, computer systems, code optimization, operating systems and secure coding. 
+
+\section{Professional Experience}
+
+\href{http://www.csuchico.edu/}{\textbf{California State University - Chico}},
+Chico, CA
+\begin{outerlist}
+    \item[] \textit{Associate Professor}%
+            \hfill \textbf{August 2019 - present}
+
+    \item[] \textit{Assistant Professor}%
+            \hfill \textbf{August 2013 - July 2019}
+           
+\end{outerlist}
+%
+%\halfblankline
+%
+%\href{https://www.hpe.com}{\textbf{Hewlett Packard Enterprise}},
+%Roseville, CA
+%\begin{outerlist}
+%
+%    \item[] \textit{DevOPs Consultant}%
+%            \hfill \textbf{Pending}
+%            \begin{innerlist}
+%                \item Responsible for working with HPE on automating the creation of the development environments they use that currently is taking them two weeks to spin up and help them use some modern DevOPs tools and building some new ones for their purposes to make the process take at most half a day.         
+%                \item Future goal after improving the efficiency of their development environments would be to accelerate the corporate tests that take two weeks to push new code out to deployment.         
+%            \end{innerlist}
+%
+%\end{outerlist}
+
+\halfblankline
+
+\href{https://www.llnl.gov/}{\textbf{Lawrence Livermore National Laboratory}},
+Livermore, CA
+\begin{outerlist}
+
+    \item[] \textit{Faculty Employee - HPC Cluster Engineering Academy}%
+            \hfill \textbf{Summer 2017, 2018 \& 2019}
+            \begin{innerlist}
+                \item Teaching students material related to how to build, configure, maintain, and use HPC computer clusters       
+                \item Mentoring student project team summer project          
+            \end{innerlist}
+
+\end{outerlist}
+
+
+\halfblankline
+
+{\textbf{Seismic Sensor Project} - \href{https://www.mechatronicscenter.com/}{California Mechatronics Center at CSU Chico}},
+Chico, CA
+\begin{outerlist}
+
+    \item[] \textit{Android App Consultant}%
+            \hfill \textbf{August 2016 - May 2017}
+            \begin{innerlist}
+                \item Responsible for development of an Android App to display seismic sensor         
+                \item Worked with project team to create a mechanism to get sensor data to a central cloud server and then visualize that data on an Android App for quick analysis and real time information about sensors.          
+            \end{innerlist}
+
+\end{outerlist}
+
+\halfblankline
+
+\href{http://www.dixonassociates.net/}{\textbf{Dixon Associates Consulting Engineers}},
+Raleigh, NC
+\begin{outerlist}
+
+\item[] \textit{IT Consultant}%
+        \hfill \textbf{1994-present}
+\begin{innerlist}
+\item Responsible for answering management's questions related to anything IT related. Responsible for giving management good cost-benefit analysis of computers, web hosting, and other IT equipment needed. Help setup networking, website, and backup systems for the company. Spec computers for purchase or build new computers for company depending on timeline and budget. 
+\end{innerlist}
+
+\end{outerlist}
+
+%\section{Current Academic Appointments}
+%
+%\textbf{Associate Professor},
+%            \href{http://www.csuchico.edu/}{California State University Chico}
+%            \hfill {August 2013 to present}
+%\begin{innerlist}
+%
+%    \item[] \href{http://www.csuchico.edu/csci}{Department of Computer Science}
+%   % \begin{innerlist}
+%     %   \item Affiliations:
+%     %       \begin{innerlist}
+%        %        \item \href{http://biomimicry.asu.edu/}{The Biomimicry Center}
+%           %     \item \href{http://beyond.asu.edu/}{BEYOND Center for Fundamental Concepts in Science}
+%              %  \item \href{http://csdc.asu.edu/}{Center for Social Dynamics and Complexity}
+%          %  \end{innerlist}
+%  %  \end{innerlist}
+%
+%\end{innerlist}
+
+%\halfblankline
+
+
+%\section{Previous Academic Appointments}
+%
+%\textbf{Instructor},
+%        \href{http://www.colorado.edu/}{University of Colorado at Boulder}
+%        \hfill {Summer 2012, 2013, 2014}
+%\begin{innerlist}
+%
+%\item[] \href{http://www.colorado.edu/cs/}{Department of Computer Science}
+%
+%\end{innerlist}
+
+
+\section{Education}
+
+\href{http://www.colorado.edu/}{\textbf{University of Colorado}},
+Boulder, CO
+\begin{outerlist}
+
+\item[] Ph.D.,
+        \href{http://www.colorado.edu/cs/}
+             {Computer Science},
+             May 2013
+        \begin{innerlist}
+        \item Thesis Topic: \emph{Exploring Low Profile Techniques for Malicious Code Detection on Smartphones}
+        \item Adviser:
+              \href{https://www.colorado.edu/cs/users/mishras}
+                   {Professor Shivakant Mishra}
+        \item Area of Study: Systems and Mobile Security
+        \end{innerlist}
+
+\item[] M.S.,
+        \href{http://www.colorado.edu/cs/}
+             {Computer Science}, May 2012
+
+\end{outerlist}
+
+\href{http://www.ncsu.edu/}{\textbf{North Carolina State University}},
+Raleigh, NC
+\begin{outerlist}
+
+\item[] B.S.,
+        \href{https://www.csc.ncsu.edu/}
+             {Computer Science}, December 2007
+\item[] B.S.,
+        \href{https://www.ece.ncsu.edu/}
+             {Computer Engineering}, December 2007             
+\item[] B.S.,
+        \href{https://www.ece.ncsu.edu/}
+             {Computer Engineering}, December 2007
+\end{outerlist}
+
+
+
+%%
+%% % Add a little space to nudge next ``Ref'd Journal Publications'' marginpar
+%% % down to make room for tall ``Submitted Journal Publications''
+%% % marginpar. If there are enough submitted journal publications, this
+%% % space will not be needed (and should be removed).
+%% \vspace{0.1in}
+%
+%
+%
+%% Add a little space to nudge next ``Conference Publications'' marginpar
+%% down to make room for tall ``Submitted Conference Publications''
+%% marginpar. If there are enough submitted journal publications, this
+%% space will not be needed (and should be removed).
+%\vspace{0.1in}
+%
+\section{Conference Publications}
+
+\begin{bibenum}
+\item Bryan Dixon. March 2020. Simplifying Teaching Continuous Integration and Continuous Deployment with Hands-on Application in a Web Development Course. In 13th annual Consortium for Computing Sciences in Colleges Southwest Regional Conference (CCSC:SW '20). ACM 
+\item Bryan Dixon. February 2017. Investigating Clustering Algorithm DBSCAN to Self Select Locations for Power Based Malicious Code Detection on Smartphones. In 3rd Conference On Mobile And Secure Services (MobiSecServ'17). IEEE
+\item Bryan Dixon. March 2016. Code Isolation for Accurate Performance Scoring using Raspberry Pis. In 9th annual Consortium for Computing Sciences in Colleges Southwest Regional Conference (CCSC:SW '16). ACM 
+\item Bryan Dixon, Shivakant Mishra, and Jeannette Pepin. August 2014.  Time and Location Power Based
+Malicious Code Detection Techniques for Smartphones. In Proceedings for Network Computing and Applications (NCA '14). IEEE
+\item Bryan Dixon and Shivakant Mishra. July 2013. Power Based Malicious Code Detection Techniques for Smartphones. In Proceedings of Trust, Security and Privacy in Computing and Communications (TrustCom '13). IEEE 
+\item Bryan Dixon, Yifei Jiang, Abhishek Jaiantilal, and Shivakant Mishra. October 2011. Location based power analysis to detect malicious code in smartphones. In Proceedings of the 1st ACM workshop on Security and privacy in smartphones and mobile devices (SPSM '11). ACM, New York, NY, USA, 27-32. DOI=10.1145/2046614.2046620 http://doi.acm.org/10.1145/2046614.2046620 
+\item Bryan Dixon and Shivakant Mishra. July 2010. On rootkit and malware detection in smartphones. In Proceedings of the 2010 International Conference on Dependable Systems and Networks Workshops (DSN-W) (DSNW '10). IEEE Computer Society, Washington, DC, USA, 162-163. DOI=10.1109/DSNW.2010.5542600 \\http://dx.doi.org/10.1109/DSNW.2010.5542600
+%
+%    
+%
+\end{bibenum}
+
+\section{Papers Pending}
+\begin{bibenum}
+\item Bryan Dixon. October 2021. Automating Configuring Parallel Compute Environments for Students. In Consortium for Computing Sciences in Colleges Midwest Regional Conference (CCSC:MW '21). ACM 
+\end{bibenum}
+%
+%\section{Conference Talks}
+%
+%\begin{bibenum}
+%\item Third Conference On Mobile And Secure Services (MobiSecServ'17) \hfill February 11, 2017 \\
+%
+%\item The 9th CCSC Southwest Region Conference on \\
+%Computer Science Curriculum (CCSC:SW 16) \hfill  March 26, 2016\\
+%\item CELT presentation on outcomes of New Faculty FLC \hfill October 3, 2014 \\
+%\item The 13th IEEE International Symposium on \\ 
+%Network Computing and Applications (IEEE NCA14) \hfill August 23, 2014 \\ 
+%\item 12th IEEE International Conference on Trust, Security and Privacy \\ in Computing and Communications (IEEE TrustCom-13) \hfill July 16th, 2013  \\
+%\item 1st ACM workshop on Security and privacy in smartphones and \\ mobile devices \hfill October 17th, 2011\\
+%\item 4th Workshop on Recent Advances in Intrusion-Tolerant Systems at \\ 40th IEEE/IFIP International Conference on Dependable Systems\\ and Networks  (DSN) \hfill June 28, 2010 \\
+%
+%\end{bibenum}
+%
+%
+%
+%\section{Invited Talks}
+%
+%\begin{bibenum}
+%   \item Sonoma State University Invited Colloquium Talk \\ 
+%	Talk Title: Power-based Malicious Code \\
+%	Detection on Smartphones \hfill February 20th, 2014 \\
+%
+%
+%\end{bibenum}
+
+%\section{Book Chapters}
+%
+%\begin{bibenum}
+%    \item Pavlic, T.P., and S.C.~Pratt.
+%        Superorganismic Behavior via Human Computation. In:
+%        P.~Michelucci~(Ed.), \emph{Handbook of Human Computation}, ch.
+%        74, pp. 911--960. 2013. \doi{10.1007/978-1-4614-8806-4_74}
+%\end{bibenum}
+%
+%\section{Other Publications}
+%
+%\begin{bibenum}
+%    \item Pavlic, T.P., P.A.G.~Sivilotti, A.D.~Weide, and B.W.~Weide.
+%        Comments on `Adaptive Cruise Control: Hybrid, Distributed, and
+%        Now Formally Verified'. Tech.~report OSU-CISRC-7/11-TR22, The Ohio State
+%        University, 2011.
+%
+%    \item Pavlic, T.P., and K.M.~Passino. Cooperative Task-processing
+%        Networks: Parallel Computation of Non-trivial Volunteering
+%        Equilibria. Tech.~report OSU-CISRC-3/11-TR05, The Ohio State
+%        University, 2011.
+%
+%    \item Pavlic, T.P. \emph{Design and Analysis of Optimal
+%        Task-Processing Agents}. PhD thesis, The Ohio State University,
+%        Columbus, OH, 2010.
+%
+%    \item Pavlic, T.P. \emph{Optimal Foraging Theory Revisited}.
+%        Master's thesis, The Ohio State University, Columbus, OH, 2007.
+%\end{bibenum}
+%
+%\section{Books in Preparation}
+%
+%\begin{bibenum}
+%    \item Pavlic, T.P., B.W.~Andrews, K.M.~Passino, and T.A.~Waite.
+%        \emph{Foraging Theory for Engineering}. In preparation.
+%\end{bibenum}
+
+%\section{Papers in Preparation}
+%
+%\begin{bibenum}
+%\item Bryan Dixon, Task queue and RESTful API to make using Raspberry Pi performance cluster easier for students
+%\item Bryan Dixon, Simulating mobile malware behaviors for use in malicious code detection research
+%\item Bryan Dixon, Problems solved generating a computationally optimized electric road trip  
+%\item Bryan Dixon, Investigating solutions to issues found with Kubernetes and MPI
+%\item Bryan Dixon, Building easy to deploy Kubernetes CI/CD platform to assist in teaching web programming
+%\end{bibenum}
+%%
+%\newpage
+%\section{Grants}
+%\restartlist{bibenum}
+%
+%%\textbf{Awaiting Decision}
+%%%
+%%\begin{bibenum}
+%%\item S-CAT2: Increasing the participation of underrepresented and first-generation students in STEM through Scholarship, Culturally-sensitive curriculum, Advising, and Teaching\\
+%%	Meghdad Hajimorad, Jaime Raigoza, Bryan Dixon, and Deborah Summers \\
+%%	2018 NSF S-STEM Grant Submission \hfill \$875K proposed\\
+%%%
+%%\end{bibenum}
+%
+%\blankline
+%
+%\textbf{Awarded}
+%
+%\begin{bibenum}
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Fall 2018 for CINS465 \hfill  valued at \$ 2100 USD\\
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Spring 2018 for CINS465 \hfill  valued at \$ 2100 USD\\
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Fall 2017 for CSCI697 \hfill  valued at \$ 300 USD\\
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Fall 2017 for CINS465 \hfill  valued at \$ 2100 USD\\
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Spring 2017 for CSCI567 \hfill  valued at \$ 2100 USD\\
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Spring 2017 for CINS465 \hfill  valued at \$ 2350 USD\\
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Spring 2017 for CSCI640 \hfill  valued at \$1850 USD\\
+%	
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Fall 2016 for CINS465 \hfill  valued at \$ 2300 USD\\
+%\item Bryan Dixon, Google Cloud Platform Education Grant \\ 
+%	Fall 2016 for CSCI640 \hfill  valued at \$1900 USD\\
+%	
+%\item Bryan Dixon, AY 2015-2016 RSCA Grant \\
+%	Looking for external grants to investigate effectiveness of \\
+%	potential high impact CS education teaching practice \hfill \$5250 USD\\ 
+%
+%\item Bryan Dixon, Student Learning Fees Proposal \\
+%	Updating OCNL 244 Spring 2016 \hfill \$27804.0 USD \\
+%\item Bryan Dixon, AWS in Education Teaching Grant \\ 
+%	For 16 Students Fall 2013 \hfill  valued at \$1600.0 USD\\
+%\item Bryan Dixon, AWS in Education Teaching Grant \\ 
+%	For 55 Students Spring 2015 \hfill  valued at \$5500.0 USD\\
+%\item Bryan Dixon, Proposed Testing Platform Computing Mesh\\ 
+%	Proposal to Provost Fall 2014 \hfill  valued at \$1600.0 USD\\
+%	
+%
+%
+%\end{bibenum}
+%
+%\blankline
+%
+%\textbf{Not Awarded}
+%
+%\begin{bibenum}
+%
+%   \item Bryan Dixon, Student Learning Fees \\
+%OCNL 244 Mac Lab \hfill Spring 2015\\
+%  \item Bryan Dixon, IRG FD Grant Fall 2013 \hfill for Fall 2014 Semester\\
+%  \item Bryan Dixon \& David Zeichick, NSF BR-US 2016 - CyberSec SaTC grant \hfill Fall 2016 \\
+%  \item S-CAT: Increasing the participation of underrepresented and first-generation students in STEM through Scholarship, Culturally-sensitive curriculum, Advising, and Teaching\\
+%	Meghdad Hajimorad, Jaime Raigoza, Bryan Dixon, and Deborah Summers \\
+%	2017 NSF S-STEM Grant Submission \hfill \$875K proposed\\
+% \item Secure and Trustworthy Cyberspace (SaTC) grant studying Internet of Things security\\
+%	Bryan Dixon, and David Zeichick \\
+%	NSF SaTC Grant Submission in November 2017 \hfill about \$230K proposed\\
+% \item S-CAT2: Increasing the participation of underrepresented and first-generation students in STEM through Scholarship, Culturally-sensitive curriculum, Advising, and Teaching\\
+%	Meghdad Hajimorad, Jaime Raigoza, Bryan Dixon \\
+%	2018 NSF S-STEM Grant Submission \hfill \$875K proposed\\
+%
+%
+%\end{bibenum}
+%
+%\blankline
+%
+%\textbf{In Preparation}
+%%
+%\begin{bibenum}
+%
+%\item Secure and Trustworthy Cyberspace (SaTC) grant studying Internet of Things security\\
+%	Bryan Dixon, and David Zeichick \\
+%	NSF SaTC Grant Submission in November 2018 \hfill about \$230K \\
+%\item S-CAT3: Increasing the participation of underrepresented and first-generation students in STEM through Scholarship, Culturally-sensitive curriculum, Advising, and Teaching\\
+%	Meghdad Hajimorad, Jaime Raigoza, Bryan Dixon \\
+%	2019 NSF S-STEM Grant Submission \hfill about \$875K\\
+%\end{bibenum}
+%
+%
+%\section{Academic Service}
+%
+%\begin{bibsection}
+%
+%    \item \textbf{\emph{Computer Science Curriculum Committee}}\\
+%        California State University - Chico \hfill Fall 2013-present.
+%    \item \textbf{\emph{Computer Science Search Committee}}\\
+%        California State University - Chico \hfill Spring 2016-present.
+%    \item \textbf{\emph{Computer Science Seach Committee Consultant}}\\
+%        California State University - Chico \hfill Fall 2013-Fall 2015.
+%    \item \textbf{\emph{Computer Science Lab Committee}}\\
+%        California State University - Chico \hfill Fall 2014-present.
+%    \item \textbf{\emph{Computer Science Standards Committee}}\\
+%        California State University - Chico \hfill Spring 2016-present.
+%    \item \textbf{\emph{Computer Science Chair Committee}}\\
+%        California State University - Chico \hfill Spring 2016
+%    \item \textbf{\emph{Computer Science VMware Coordinator}}\\
+%    	Managing the VMware VMAP store for the CS Department. 
+%        California State University - Chico \hfill Fall 2014-present.
+%    \item \textbf{\emph{Faculty Adviser for USR0 Student Group}}\\
+%        California State University - Chico \hfill Fall 2013-present.
+%    \item \textbf{\emph{Faculty Adviser for ACM Student Club}}\\
+%        California State University - Chico \hfill Fall 2014-present.
+%     \item \textbf{\emph{Faculty Adviser for Docker Student Club}}\\
+%        California State University - Chico \hfill Fall 2017-present.
+%%    \item \textbf{\emph{Faculty Adviser for ACM-W Student Group}}\\
+%%        California State University - Chico \hfill Fall 2016-present.
+%    \item \textbf{\emph{TECH 101 Presenter for CS Department}}\\
+%        California State University - Chico \hfill Fall 2015-Spring 2017
+%
+%\end{bibsection}
+%
+%\section{Student Advising}
+%
+%\begin{bibsection}
+%
+%    \item \textbf{Undergraduate Academic Advisor for CS Students }\\
+%        California State University - Chico \hfill Spring 2014-present.
+%   \end{bibsection}
+%%\newpage
+%\section{Teaching Experience}
+%
+%\href{http://www.csuchico.edu/}{\textbf{California State University - Chico}},
+%Chico, CA
+%\begin{outerlist}
+%
+%\item[] \textit{Assistant Professor}%
+%    \hfill \textbf{Fall~2013 to present}
+%    \begin{innerlist}
+%        \item CSCI211: Programming and Algorithms II 
+%        \begin{innerlist}
+%            \item A second semester object-oriented programming course in computer science that emphasizes problem solving. This course continues the study of software specification, design, implementation, and debugging techniques while introducing abstract data types, fundamental data structures and associated algorithms. Coverage includes dynamic memory, file I/O, linked lists, stacks, queues, trees, recursion, and an introduction to the complexity of algorithms. Students are expected to design, implement, test, and analyze a number of programs.     
+%        \end{innerlist}
+%        \item EECE320: Computer Architecture
+%        \begin{innerlist}
+%            \item  Study of computing architecture and how the structure of various hardware and software modules affects the ultimate performance of the total system. Topics include qualitative and quantitative analysis of bandwidths, response times, error detection and recovery, interrupts, and system throughput; distributed systems and coprocessors; vector and parallel architectures. 
+%        \end{innerlist}
+%      %  \newpage
+%        \item CSCI340: Operating Systems
+%        \begin{innerlist}
+%            \item Operating system fundamentals, including history, process and thread management, concurrency with semaphores and monitors, deadlocks, storage management, file systems, I/O, and distributed systems.      
+%        \end{innerlist}
+%        \item CSCI444: UNIX System Administration  
+%        \begin{innerlist}
+%            \item This course guides students through the fundamental responsibilities of UNIX system administration. Topics include file system monitoring, file and directory archiving, user account management, shutdown and rebooting sequences, system backups, system log responsibilities, and basic system security. Projects focus on the creation of shell scripts to automate system administration tasks.
+%        \end{innerlist}
+%         \item CINS465: Advanced Web Programming
+%        \begin{innerlist}
+%            \item This course is a comprehensive introduction to the major technologies used in the construction of interactive, client-server Web sites. Emphasis is placed on the protocols and standards used for exchanging data between the client and server programs. Both client and server side implementation methods are discussed using programming and scripting languages for the creation of dynamic Web pages. The use of direct client-to-server network communication, performance implications for implementation technologies, and techniques for increasing Web site security are discussed.       
+%          \end{innerlist}
+%          \item CSCI540: Systems Programming
+%        \begin{innerlist}
+%            \item A hands-on project course that examines the development of systems software. It provides an introduction to writing low level programs in the UNIX/Linux environment. Topics include using system calls, processes, threads, concurrency, process/thread synchronization, signals, and interprocess communication. The course includes several large programming projects which provide students solid experience in lower level programming.      
+%          \end{innerlist}
+%          \item CSCI567: Mobile Programming
+%        \begin{innerlist}
+%            \item A course focusing on teaching students how to develop native mobile applications.  
+%          \end{innerlist}
+%          \item CSCI640: Advanced Operating Systems
+%        \begin{innerlist}
+%            \item In-depth study of operating systems concepts including results from recent research. Topics may include processes, threads, virtual memory, file systems, distributed computing, scheduling, protection, and communication protocols. Students may be required to implement operating system projects.   
+%          \end{innerlist}
+%    \end{innerlist}
+%
+%\end{outerlist}
+%
+%\newpage
+%
+%\href{http://www.colorado.edu/}{\textbf{University of Colorado at Boulder}},
+%Boulder, CO
+%\begin{outerlist}
+%
+%\item[] \textit{Instructor}%
+%    \hfill \textbf{Summer 2012, 2013, \& 2014 }
+%    \begin{innerlist}
+%        \item Instructor for CSCI2400: Computer Systems
+%            %
+%            \begin{innerlist}
+%                \item Covers how programs are represented and executed by modern computers, including low-level machine representations of programs and data, an understanding of how computer components influence performance and memory hierarchy. 
+%            \end{innerlist}
+%    \end{innerlist}
+%\item[] \textit{Teaching Assistant}%
+%    \hfill \textbf{August 2008 to May 2010 \& August 2012 to May 2013}\\
+%    \begin{innerlist}
+%        \item TA for CSCI2400: Computer Systems
+%        \begin{innerlist}
+%            \item Fall~2008, Fall~2012~, and Spring~2013
+%            % \item Sample student evaluations available upon request.
+%            \item Responsible for multiple 1-hour recitations every week where the hands on tools the students need to do the assignments they are currently working on. 
+%            \item Responsible for grading students via 15 minute interviews for each assignment turned in.
+%            \item Responsible for helping with exam grading
+%        \end{innerlist}
+%
+%        \halfblankline
+%
+%        \item TA for CSCI1300: Computer Science 1: Programming
+%        \begin{innerlist}
+%            \item Fall~2009
+%            \item Responsible for overseeing multiple labs where students would work on lab assignments and I would help them if they got stuck. 
+%            \item Responsible for grading students via 15 minute interviews for every two assignment turned in and helping with exam grading.
+%        \end{innerlist}
+%        
+%
+%        \halfblankline
+%
+%        \item TA for CSCI3753: Operating Systems
+%        \begin{innerlist}
+%            \item Spring~2009
+%            \item Responsible for overseeing multiple labs where students would work on lab assignments and I would help them if they got stuck. 
+%            \item Responsible for grading students via 15 minute interviews for every assignment turned in.
+%            \item Created new kernel hacking assignment for the course
+%            \item Responsible for helping with exam grading
+%        \end{innerlist}
+%        \halfblankline
+%
+%        \item TA for CSCI3155: Principles of Programming Languages
+%        \begin{innerlist}
+%            \item Spring~2010
+%
+%            % \item Sample student evaluations available upon request.
+%
+%            \item Responsible for attending lectures
+%            \item Responsible for answering student questions in person and by email
+%            \item Responsible for grading assignments and exams
+%
+%        \end{innerlist}
+%
+% \end{innerlist}
+%\halfblankline
+%\item[] \href{http://www.nsfgk12.org/}
+%        {\emph{National Science Foundation GK\-/12 Graduate Fellow}}
+%        \hfill \textbf{June 2010 to May 2012}
+%    \begin{innerlist}
+%        \item First year I worked with the fourth\-/grade teachers helping them with their inquiry\-/based
+%            fourth\-/grade science lessons. 
+%       \item[] While at the Elementary school the first year created a short after school program to teach 4th and 5th graders basic web development. 
+%       \item Second year I worked with the middle school science teachers to provide them resources and extra science knowledge in the classroom. 
+%       \item[] While at the middle school the second year created an after school program to teach basic python programming to the students. We worked together using \em VPython \em to create simple games in this visual language extension.
+%        \end{innerlist}
+% \end{outerlist}
+% 
+%\newpage
+%
+%\href{http://www.ncsu.edu/}{\textbf{North Carolina State University}},
+%Raleigh, NC
+%\begin{outerlist}
+%\item[] \textit{Teaching Assistant}%
+%    \hfill \textbf{August 2006 to December 2007}\\
+%    \begin{innerlist}
+%        \item TA for E115: Introduction to Computing Environments
+%        \begin{innerlist}
+%            \item Fall 2006 \& Fall 2007
+%            % \item Sample student evaluations available upon request.
+%            \item Responsible for all aspects of the course from teaching lectures, holding office hours, grading assignments and exams
+%            \item Material for this course was put together by a MS student and taught by undergrads
+%            \item E 115 is an introductory course that all incoming College of Engineering students (first year, transfer, etc.) are required to complete. This course's purpose is to better prepare students for using the linux computing and technology resources of the College of Engineering at North Carolina State University. 
+%         \end{innerlist}
+%
+%        \halfblankline
+%        \item TA for ECE 109: Introduction to Computer Systems 
+%        \begin{innerlist}
+%            \item Fall 2006 \& Fall 2007
+%            % \item Sample student evaluations available upon request.
+%            \item Responsible for all for holding a problem lab where I worked through problems with the students and answered questions as they got stuck
+%            \item Responsible for grading assignments and helping with grading of exam
+%         \end{innerlist}
+%
+%     \end{innerlist}
+%\end{outerlist}
+%
+%\section{Professional Service}
+%
+%%\textbf{Committee Service}
+%%\begin{innerlist}
+%%    \item Officer, IEEE Special Technical Community for Human Computation
+%%\end{innerlist}
+%%
+%%\halfblankline
+%
+%\textbf{Referee Service}
+%\begin{innerlist}
+%   \item \emph{WINSYS ICETE 13\textsuperscript{th} International Conference on Wireless Networks and Mobile Systems}
+%    \item \emph{IEEE Transactions on Information Forensics and Security}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%%\textbf{Editorial Service}
+%%\begin{innerlist}
+%%    \item \emph{Human Computation}, editorial board (2014--)
+%%    \item \emph{Frontiers in Robotics and AI, Computational Intelligence}, review editorial board (2014--)
+%%\end{innerlist}
+%%
+%%\halfblankline
+%
+%%\textbf{Conference Service}
+%%\begin{bibsection}[\enskip\textbullet,leftmargin=*]
+%%    \item Program Committee: 2016 International Symposium on Intelligent
+%%        Control (ISIC~2016), Buenos Aires, Argentina, September 19--22,
+%%        2016.
+%%
+%%    \item Local Organizing Committee: 2015 Conference on Complex
+%%        Systems~(CCS'15), Tempe, AZ, September 28 -- October~2, 2015.
+%%
+%%    \item Co\-/organizer (with Yun Kang) for technical session:
+%%        ``Complex Systems of Social Insects in Research and Education'',
+%%        2013 International Symposium on Biomathematics and Ecology
+%%        Education and Research~(BEER~2013), Arlington, VA,
+%%        October 11--13, 2013.
+%%
+%%    \item Organizer for mini\-/symposium: ``MS19: Optimization and
+%%        Rationality in Eusocial Insects'', 2013 Society for Mathematical
+%%        Biology Annual Meeting and Conference~(SMB~2013), Tempe, AZ,
+%%        June 10--13, 2013.
+%%
+%%    \item Organizer/Associate Editor for invited session: ``Correctness
+%%        by Verification and Design'', 14\textsuperscript{th} IEEE
+%%        Conference on Intelligent Transportation Systems~(ITSC~2011),
+%%        Washington, DC, October 5--7, 2011.
+%%\end{bibsection}
+%%\newpage
+
+
+
+
+%\section{Professional Memberships}
+%
+%Institute for Electrical and Electronics Engineers~(IEEE), Member
+%%,2002--present
+%%
+%%\begin{innerlist}
+%%\item IEEE Control Systems Society (2004--present)
+%%\item IEEE Communications Society (2012--present)
+%%\item IEEE Computer Society (2009--present)
+%%\item IEEE Intelligent Transportation Systems Society (2011--present)
+%%\item IEEE Systems, Man, and Cybernetics Society (2011--present)
+%%\item IEEE Robotics and Automation Society (2011--present)
+%%\item IEEE Computational Intelligence Society (2013--present)
+%%\item IEEE Circuits and Systems Society (2013--present)
+%%\item IEEE Information Theory Society (2013--present)
+%%\end{innerlist}
+%
+%\halfblankline
+%
+%Association for Computing Machinery~(ACM), Member, 2014--present
+%
+%
+%%\section{Other Meeting Attendance}
+%%
+%%\textbf{Invited Participant}
+%%\begin{innerlist}
+%%    \item 12th Annual National Academies Keck Futures Initiative
+%%        Conference~(NAKFI 2014) on Collective Behavior: From Cells to
+%%        Societies, November 13--15, 2014
+%%    \item 2014 Computing Community Consortium Human Computation Roadmap
+%%        Summit Workshop, June 18--20, 2014
+%%    \item BEYOND Center for Fundamental Concepts in Science Workshop:
+%%        Complex Systems Theory and Cancer Biology, February 22--23, 2014
+%%\end{innerlist}
+%%
+%%\textbf{General Participant}
+%%\begin{innerlist}
+%%    \item NSF Workshop on Self-organizing Particle Systems, January 8, 2014
+%%    \item 1\textsuperscript{st} IEEE/ACM Workshop on Signal Processing Advances in Sensor Networks, April~8, 2013
+%%    \item CoMSES Workshop on ABM in Education, February 28~-- March~2, 2013
+%%    \item 49\textsuperscript{th} IEEE Conference on Decision and Control, December 15--17, 2010
+%%\end{innerlist}
+%
+%\section{Service}
+%
+%Recent contributor to several open\-/source software projects, including:
+%\begin{innerlist}
+%    \item \href{https://github.com/CSUChico-CINS465/Openshift_DIY_Latest_Python3_and_Django}{OpenShift DIY cartridge} for Python3.5 \& Django 1.9.7
+%    \item \href{https://github.com/javawolfpack/Jobe-Docker}{Jobe Docker} a repository to create a Jobe server in a docker container for use with Moodle. 
+%\end{innerlist}
+%%
+%%\halfblankline
+%%
+%%Frequent contributor to \href{http://www.wikipedia.org/}{Wikipedia}
+%%%
+%%\begin{innerlist}
+%%    \item Significant contributions to articles on control theory,
+%%        electronics, and signals and systems.
+%%\end{innerlist}
+%
+%\halfblankline
+%
+%Contributor to \href{http://www.quora.com/}{Quora}
+%%
+%\begin{innerlist}
+%    \item Contributions to articles on education, computer science, and math.
+%\end{innerlist}
+%
+%%\halfblankline
+%%
+%%\href{http://www.osufirst.org/}{OSU FIRST Robotics Team},
+%%\href{http://www.osu.edu}{The Ohio State University}, 2000--2004
+%%\begin{innerlist}
+%%\item Introduced middle school and high school students to science and
+%%        technology by participating with them in national robotics
+%%        competitions.
+%%\item Led 2002 team to regional silver medal
+%%        \href{http://www.firstwiki.org/Engineering_Inspiration_Award}
+%%             {\emph{Engineering Inspiration Award}}.
+%%\item \emph{Lead Team Mentor}, 2002--2004
+%%\item \emph{Component Design Team Lead Mentor}, 2001--2002
+%%\end{innerlist}
+%%
+%%\halfblankline
+%%
+%%Ohio Science Olympiad state competition, Robot Ramble Event, 2003
+%%%
+%%\begin{innerlist}
+%%    \item Supervised setup and judging of event for middle-school and
+%%        high-school students
+%%\end{innerlist}
+%%
+%%\halfblankline
+%%
+%%Director of Computers,
+%%\href{http://ec.osu.edu/}{Engineers' Council},
+%%\href{http://www.osu.edu/}{The Ohio State University}, 2002
+%%
+%%\halfblankline
+%%
+%%\href{http://www.linuxvirtualserver.org/}
+%%     {Linux Virtual Server Project}, 1999--2000
+%%\begin{innerlist}
+%%\item Early member of the team that formed the open\-/source project that
+%%        is now an important load balancing solution for the Linux
+%%        software platform.
+%%\end{innerlist}
+%%
+%%\halfblankline
+%%
+%%\href{http://www.gcfn.org/}
+%%     {Greater Columbus Free\-/Net}, 1995--1997
+%%\begin{innerlist}
+%%\item Provided technical support services.
+%%\end{innerlist}
+%%
+%%\halfblankline
+%%
+%%CompuTeen Bulletin Board System, 1993--1995
+%%\begin{innerlist}
+%%\item Administrated dial\-/up bulletin board system.
+%%\item Founded and administrated TeenLiNK, an international electronic
+%%        mail network that spread through the United States, Canada, and
+%%        Australia and delivered mail over a series of electronic dial\-/up
+%%        drop offs.
+%%\end{innerlist}
+
+%\section{Application Areas}
+%
+%Android, Security, Computer Systems, Operating Systems, Distributed Systems, Code Optimization
+%
+%
+%\section{Hardware and Software Skills}
+%
+%
+%Computer Programming:
+%%
+%\begin{innerlist}
+%    \item C, Python2, Python3, Android, Java, JavaScript, Pascal, PHP,
+%        Lisp, UNIX shell scripting, GNU make, C$+$$+$
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Numerical Analysis:
+%%
+%\begin{innerlist}
+%    \item \Matlab, R, Maple
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Version Control and Software Configuration Management:
+%%
+%\begin{innerlist}
+%    \item DVCS (Mercurial/MQ, Git/StGit), VCS (RCS, CVS, SVN, SCCS), and
+%        others
+%\end{innerlist}
+
+%\halfblankline
+%
+%\href{http://www.mathworks.com/products/matlab/}{\Matlab} skill set:
+%%
+%\begin{innerlist}
+%    \item Linear algebra, Fourier transforms, Monte Carlo analysis,
+%        nonlinear numerical methods, polynomials, statistics,
+%        $N$-dimensional filters, visualization
+%
+%    \item Toolboxes: communications, control system, filter design,
+%        genetic algorithm and direct search, signal processing, system
+%        identification
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Software Verification:
+%%
+%\begin{innerlist}
+%    \item KeY, PRISM, KeYmaera
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Information/Internet Technology:
+%%
+%\begin{innerlist}
+%    \item Networking (UDP, TCP, ARP, DNS, Dynamic
+%        routing), Services (Apache, SQL, MediaWiki, POP, IMAP, SMTP,
+%        application\-/specific daemon design)
+%\end{innerlist}
+
+%\halfblankline
+%
+%Desktop Editing and Productivity Software:
+%%
+%\begin{innerlist}
+%    \item Vim, Emacs, Eclipse, Atom, IntelliJ
+%    \item \TeX{} (\LaTeX{}, \BibTeX{}),
+%    \item Microsoft Office, OpenOffice.org, LibreOffice, Corel
+%        WordPerfect, Google Docs
+%    \item GIMP
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Operating Systems:
+%%
+%\begin{innerlist}
+%    \item Microsoft Windows family, Apple OS X, IBM OS/2, Linux, BSD,
+%        IRIX, AIX, Solaris, and other UNIX variants
+%\end{innerlist}
+
+%\section{Expertise}
+%
+%Mathematics:
+%%
+%\begin{innerlist}
+%    \item Applied Mathematics, Real and Complex Analysis, Measure
+%        Theory, Differential Geometry, Game Theory, Graph Theory,
+%        Combinatorics
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Control Theory and Engineering:
+%%
+%\begin{innerlist}
+%    \item Linear and Nonlinear Systems Theory, Feedback, Variable
+%        Structure Systems and Sliding Modes, Distributed and Intelligent
+%        Control, Dynamic Optimization, Biomimicry, Bioinspiration,
+%        Hybrid and CyberPhysical Systems
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Communications and Signal Processing:
+%%
+%\begin{innerlist}
+%    \item Probability, Random Variables, Stochastic Processes,
+%        Information Theory, Estimation, Networks
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Computer Science and Engineering:
+%%
+%\begin{innerlist}
+%    \item Model Checking (automated, distributed, hybrid,
+%        probabilistic), Hybrid Automata, Software Verification,
+%        Component\-/Based Reusable Software
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Natural and Social Sciences (Biology, Neuroscience, Psychology, Anthropology):
+%%
+%\begin{innerlist}
+%    \item Behavioral Ecology, Foraging Theory, Altruism, Impulsiveness,
+%        Evolution
+%\end{innerlist}
+%
+\section{Personal Projects}
+CSCI551 Cluster Project
+\begin{innerlist}
+\item Project from Student Learning Fees to be deployed for Fall 2021 semester
+\item Storage node and 60 embedded boards for use to teaching cluster programming in CSCI551
+\end{innerlist}
+\href{https://www.bryancdixon.com}{Personal Website}
+\begin{innerlist}
+\item Used to host all my course projects and materials through rendered markdown from git repos of the original assignments and code. Built in Python with Django.
+\item Uses GitHub and GitLab APIs to dynamically create repositories for my students in each class
+\item For my web course it deploys \href{https://github.com/CSUChico-CINS465/starter_repo}{starter code} that allows me to more easily teach Docker, CI/CD, and Kubernetes in the class. 
+\end{innerlist}
+\href{https://github.com/csuchico-csci551/JetsonCluster}{Jetson Cluster}
+\begin{innerlist}
+\item Ansible Playbooks and instructions to assist students deploying a cluster of Nvidia Jetson Nano boards as a development platform for use in the parallel programming course I taught Fall 2019.
+\item Starting point for the CSCI551 cluster project and basis of paper being published this Fall. 
+\end{innerlist}
+
+\section{Awards}
+
+%\href{http://www.nsf.gov/}{National Science Foundation}
+%\begin{innerlist}
+%\item \href{http://www.nsfgk12.org/}{GK\-/12 Graduate Fellowship}, 2010--2012
+%\end{innerlist}
+\href{http://www.scouting.org/}{Boy Scouts of America} - \href{http://www.scouting.org/About/Research/EagleScouts.aspx}{Eagle Scout}, May 2001
+
+\href{http://www.ieee.org/education_careers/education/ieee_hkn/index.html}{Eta Kappa Nu}
+
+\href{http://upe.acm.org/}{Upsilon Pi Epsilon}
+%
+%\halfblankline
+%
+%\href{http://www.osu.edu}{The Ohio State University}
+%\begin{innerlist}
+%\item \href{http://www.gradsch.osu.edu/graduate-school-fellowships-for-first-year-graduate-students.html}
+%           {Dean's Distinguished University (DDU) Graduate Fellowship}, 2004--2010
+%\item Electrical and Computer Engineering Bradshaw Scholarship,
+%        2002--2004
+%\item Electrical and Computer Engineering Shafstall Scholarship,
+%        2001--2003
+%\item University Scholarship, 1999--2003
+%\end{innerlist}
+%
+%\section{Popular Media}
+%
+%\begin{bibsection}
+%
+%    \item Pavlic, Theodore P. ``Cognition in Ants, Robots, and Pre-biotic Chemistries: A
+%        Science on Google+ HOA with Dr. Ted Pavlic.'' Interview by Chris
+%        Robinson. \emph{Science on Google+: A Public Database}, April
+%        15, 2015.
+%        \url{https://plus.google.com/u/0/events/cmbuh4hdnc558tqg1p86dqna35k}
+%
+%    \item Sigfried, Tom. ``If the world is a computer, life is an
+%        algorithm'', \emph{Science News: Context}, June 18, 2014.
+%        \url{https://www.sciencenews.org/blog/context/if-world-computer-life-algorithm}
+%
+%    \item ``The Free \& Unfree: Open Source Everywhere~-- How a Global
+%        Coding Coalition Built an Open Source Superserver'',
+%        \emph{Wired}, 12(06), June 2004.
+%
+%\end{bibsection}
+%
+%\section{Security Clearance}
+%
+%Department of Defense Top Secret SCI with polygraph (expired: 2002)
+%
+%% \section{Citizenship}
+%%
+%% USA
+%
+%\section{References Available to Contact}
+%
+%\href
+%{http://www.public.asu.edu/~spratt1/}
+%{\textbf{Dr.~Stephen C.~Pratt}}
+%(e\-/mail:~\href{mailto:stephen.pratt@asu.edu}{stephen.pratt@asu.edu}; phone:~+1-480-727-9425)
+%%
+%\begin{innerlist}
+%    \item Associate Professor,
+%        \href{http://sols.asu.edu/}{School of Life Sciences},
+%        \href{http://www.asu.edu/}{Arizona State University}
+%
+%    \item[$\diamond$] School of Life Sciences, PO Box 874501, Tempe, AZ
+%        85287-4501
+%
+%    \item[$\star$] \emph{Dr.~Pratt is my current postdoctoral supervisor.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\textbf{Dr.~Spring M.~Berman}
+%(e\-/mail:~\href{mailto:Spring.Berman@asu.edu}{Spring.Berman@asu.edu}; phone:~+1-480-965-4431)
+%%
+%\begin{innerlist}
+%    \item Assistant Professor,
+%        \href{http://sols.asu.edu/}{Mechanical and Aerospace Engineering},
+%        \href{http://www.asu.edu/}{Arizona State University}
+%
+%    \item[$\diamond$] School for Engineering of Matter, Transport, and
+%        Energy, PO Box 876106, Tempe, AZ
+%        85287-6106
+%
+%    \item[$\star$] \emph{Dr.~Berman is collaborator on my bio\-/mimicry work.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://cosmos.asu.edu/}
+%{\textbf{Dr.~Paul C.~W.~Davies}}
+%(e\-/mail:~\href{mailto:Paul.Davies@asu.edu}{Paul.Davies@asu.edu}; phone:~+1-480-965-3240)
+%%
+%\begin{innerlist}
+%    \item Regents Professor and Director,
+%        \href{http://beyond.asu.edu/}{Beyond Center for Fundamental Concepts in Science},
+%        \href{http://www.asu.edu/}{Arizona State University}
+%
+%    \item[$\diamond$] Beyond Center for Fundamental Concepts in Science,
+%        P.O. Box 871504, Tempe, AZ
+%        85287-1504
+%
+%    \item[$\star$] \emph{Dr.~Davies is collaborator on my
+%        origins\-/of\-/life work.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://emergence.asu.edu/}
+%{\textbf{Dr.~Sara Imari Walker}}
+%(e\-/mail:~\href{mailto:sara.i.walker@asu.edu}{sara.i.walker@asu.edu}; phone:~+1-480-727-2394)
+%%
+%\begin{innerlist}
+%    \item Assistant Professor,
+%        \href{http://sese.asu.edu/}{School of Earth and Space Exploration},
+%        \href{http://www.asu.edu/}{Arizona State University}
+%
+%    \item[$\diamond$] ASU School of Earth and Space Exploration,
+%        PO Box 871404, Tempe, AZ
+%        85287-1404
+%
+%    \item[$\star$] \emph{Dr.~Walker is collaborator on my
+%        origins\-/of\-/life work.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\textbf{Dr.~Pietro Michelucci}
+%(e\-/mail:~\href{mailto:pem@thinksplash.com}{pem@thinksplash.com}; phone: +1-571-235-3288)
+%\begin{innerlist}
+%    \item Principal,
+%        ThinkSplash LLC, Washington, DC
+%
+%    \item[$\star$] \emph{I co\-/authored a chapter in the \emph{Handbook
+%        of Human Computation}, for which Dr.~Michelucci was the
+%        editor\-/in\-/chief.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://www.cse.ohio-state.edu/~paolo/}
+%{\textbf{Dr.~Paolo A.~G.~Sivilotti}}
+%(e\-/mail:~\href{mailto:sivilotti.1@osu.edu}{sivilotti.1@osu.edu}; phone: +1-614-292-5835)
+%\begin{innerlist}
+%    \item Associate Professor,
+%        \href{http://www.cse.ohio-state.edu/}{Computer Science and Engineering},
+%        \href{http://www.osu.edu/}{The Ohio State University}
+%
+%    \item[$\diamond$] 395 Dreese Laboratories, 2015 Neil Ave., Columbus,
+%        OH  43210
+%
+%    \item[$\star$] \emph{Dr.~Sivilotti is my past postdoctoral
+%        supervisor.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://www.cse.ohio-state.edu/~weide/}
+%{\textbf{Dr.~Bruce W.~Weide}}
+%(e\-/mail:~\href{mailto:weide.1@osu.edu}{weide.1@osu.edu}; phone:~+1-614-292-1517)
+%\begin{innerlist}
+%    \item Professor and Associate Chair,
+%        \href{http://www.cse.ohio-state.edu/}{Computer Science and
+%        Engineering}\\
+%        \href{http://www.osu.edu/}{The Ohio State University}
+%
+%    \item[$\diamond$] 395 Dreese Laboratories, 2015 Neil Ave., Columbus,
+%        OH  43210
+%
+%    \item[$\star$] \emph{Dr.~Weide is a co\-/PI on the NSF grant that
+%        funded my previous postdoctoral position.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://hamilton-lab.wikidot.com/}
+%{\textbf{Dr.~Ian M.~Hamilton}}
+%(e\-/mail:~\href{mailto:hamilton.598@osu.edu}{hamilton.598@osu.edu}; phone:~+1-614-292-9147)
+%%
+%\begin{innerlist}
+%    \item Assistant Professor,
+%        \href{http://eeob.osu.edu/}{Evolution, Ecology, and Organismal Biology}
+%        and
+%        \href{http://www.math.ohio-state.edu/}{Mathematics}\\
+%        \href{http://www.osu.edu/}{The Ohio State University}
+%
+%    \item[$\diamond$] 300 Aronoff Laboratory, 318 W.~12th Avenue,
+%        Columbus, OH  43210
+%
+%    \item[$\star$] \emph{Dr.~Hamilton has been a valuable
+%        interdisciplinary resource to me.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://www.ece.osu.edu/~passino/}
+%{\textbf{Dr.~Kevin M.~Passino}}
+%(e\-/mail:~\href{mailto:passino.1@osu.edu}{passino.1@osu.edu}; phone:~+1-614-312-2472)
+%%
+%\begin{innerlist}
+%    \item Professor,
+%        \href{http://www.ece.osu.edu/}{Electrical and Computer
+%        Engineering},
+%        \href{http://www.osu.edu/}{The Ohio State University}
+%
+%    \item[$\diamond$] 205 Dreese Laboratories, 2015 Neil Ave., Columbus,
+%        OH  43210
+%
+%    \item[$\star$] \emph{Dr.~Passino was my graduate adviser.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://www.ece.osu.edu/~serrani/}
+%{\textbf{Dr.~Andrea Serrani}}
+%(e\-/mail:~\href{mailto:serrani.1@osu.edu}{serrani.1@osu.edu}; phone:~+1-614-292-4976)
+%%
+%\begin{innerlist}
+%    \item Associate Professor,
+%        \href{http://www.ece.osu.edu/}{Electrical and Computer Engineering}\\
+%        \href{http://www.osu.edu/}{The Ohio State University}
+%
+%    \item[$\diamond$] 205 Dreese Laboratories, 2015 Neil Ave., Columbus,
+%        OH  43210
+%
+%    \item[$\star$] \emph{Dr.~Serrani was a member of my doctoral
+%        committee.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://feh.osu.edu/staff/view.html?UID=798}
+%{\textbf{Dr.~Richard J.~Freuler}}
+%(e\-/mail:~\href{mailto:freuler.1@osu.edu}{freuler.1@osu.edu}; phone: +1-614-688-0499)
+%\begin{innerlist}
+%    \item Professor of Practice,
+%        \href{http://mae.osu.edu/}{Mechanical and Aerospace Engineering}\\
+%        \href{http://www.osu.edu/}{The Ohio State University}
+%
+%    \item[$\diamond$] 244 Hitchcock Hall, 2070 Neil Ave., Columbus, OH  43210
+%
+%    \item[$\star$] \emph{Dr.~Freuler coordinates the Fundamentals of
+%        Engineering for Honors program in which I served as an
+%        instructor early in my academic career.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\href
+%{http://mae.osu.edu/people/staab.1}
+%{\textbf{Dr.~George H.~Staab}}
+%(e\-/mail:~\href{mailto:staab.1@osu.edu}{staab.1@osu.edu}; phone: +1-614-292-7920)
+%\begin{innerlist}
+%    \item Associate Professor,
+%        \href{http://mae.osu.edu/}{Mechanical and Aerospace Engineering}\\
+%        \href{http://www.osu.edu/}{The Ohio State University}
+%
+%    \item[$\diamond$] W192 Scott Laboratory, 201 W.~19th Ave., Columbus, OH  43210
+%
+%    \item[$\star$] \emph{Dr.~Staab is the faculty adviser for the OSU
+%        FIRST robotics and engineering outreach group of which I was a
+%        four\-/year member and team leader.}
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\textbf{Dr.~Clayton Daigle}
+%(e\-/mail:~\href{mailto:Clayton.Daigle@silabs.com}{Clayton.Daigle@silabs.com}; phone: +1-512-532-5935)
+%\begin{innerlist}
+%    \item Mixed-Signal Engineer,
+%        \href{http://www.silabs.com/}{Silicon Laboratories}, Austin, TX
+%
+%    \item[$\star$] \emph{Dr.~Daigle was my direct supervisor when I
+%        worked for National Instruments as an analog hardware R\&D
+%        engineer.}
+%\end{innerlist}
+
+% The ``More Info'' section may not be necessary; make sure it's short
+% so it doesn't prevent people from seeing references available to
+% contact.
+%\section{More Information}
+%
+%More information and auxiliary documents can be found at\\%
+%\url{http://www.bryancdixon.com/dossier}
+%
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
